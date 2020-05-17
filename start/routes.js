@@ -17,3 +17,7 @@
 const Route = use('Route')
 
 Route.on('/').render('welcome')
+
+Route.get('page','PageController.index')
+
+Route.get('page/:name','PageController.create')

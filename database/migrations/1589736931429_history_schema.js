@@ -7,6 +7,7 @@ class HistorySchema extends Schema {
   up () {
     this.create('histories', (table) => {
       table.increments()
+      table.text('description').notNullable()
       table.timestamps()
     })
   }
