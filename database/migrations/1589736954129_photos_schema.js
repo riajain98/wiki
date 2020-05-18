@@ -9,6 +9,7 @@ class PhotosSchema extends Schema {
       table.increments()
       table.string('url', 512).notNullable().unique()
       table.timestamps()
+      table.integer('wiki_id').unsigned().references('id').inTable('wiki').onDelete('CASCADE')
     })
 
   }

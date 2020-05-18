@@ -11,9 +11,9 @@ class WikiSchema extends Schema {
       table.boolean('isdelete').defaultTo(false);
       table.timestamps()
 
-      table.integer('history_id').unsigned().references('id').inTable('histories').onDelete('CASCADE')
-      table.integer('description_id').unsigned().references('id').inTable('descriptions').onDelete('CASCADE')
-      table.integer('photo_id').unsigned().references('id').inTable('photos').onDelete('CASCADE')
+      // table.integer('history_id').unsigned().references('id').inTable('histories').onDelete('CASCADE')
+      // table.integer('description_id').unsigned().references('id').inTable('descriptions').onDelete('CASCADE')
+      // table.integer('photo_id').unsigned().references('id').inTable('photos').onDelete('CASCADE')
     })
 
   }

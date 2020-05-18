@@ -8,6 +8,11 @@
  * Resourceful controller for interacting with pages
  */
 const Wiki = use('App/Models/Wiki')
+const History = use('App/Models/History')
+const Description = use('App/Models/Description')
+const Photo = use('App/Models/Photo')
+
+
 class PageController {
   /**
    * Show a list of all pages.
@@ -20,8 +25,8 @@ class PageController {
    */
   async index ({ request, response, view }) {
     // const wiki = yield Wiki.all()
-    return Wiki.all()
-
+    // return Wiki.findBy('isdelete', false)
+    return Wiki.query().where('isdelete', '=', false).fetch()
   }
 
   /**
@@ -33,12 +38,12 @@ class PageController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async create ({ params, request, response, view }) {
-    const wiki = await Wiki
-      .query()
-      .where('name', '=', params.name)
-      .fetch()
-    return response.json(wiki)
+  async showOrCreate ({ params, request, response, view }) {
+    const wiki = await Wiki.findOrCreate({name: params.name})
+    await wiki.load('description')
+    await wiki.load('history')
+
+    return wiki
   }
 
   /**
@@ -74,6 +79,9 @@ class PageController {
    * @param {View} ctx.view
    */
   async edit ({ params, request, response, view }) {
+    const wiki = await Wiki.findByOrFail('name', params.name)
+    await wiki.load('description')
+    return wiki
   }
 
   /**
@@ -85,6 +93,22 @@ class PageController {
    * @param {Response} ctx.response
    */
   async update ({ params, request, response }) {
+
+    const wiki = await Wiki.findBy('name', params.name)
+    const wikiInfo = request.only(['name', 'change', 'description'])
+
+    wiki.name = name
+
+    const description = new Description
+    description.description = wikiInfo.description
+
+    const history = new History
+    history.description = wikiInfo.change
+
+    await wiki.save()
+    await wiki.description().save(description)
+    await wiki.history().save(history)
+
   }
 
   /**

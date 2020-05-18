@@ -20,4 +20,8 @@ Route.on('/').render('welcome')
 
 Route.get('page','PageController.index')
 
-Route.get('page/:name','PageController.create')
+Route.get('page/:name','PageController.showOrCreate').as('ShowOrCreateWiki')
+
+Route.get('page/:name/edit', 'PageController.edit').as('EditWiki')
+
+Route.put('page/:name/', 'PageController.update')

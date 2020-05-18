@@ -9,6 +9,7 @@ class DescriptionSchema extends Schema {
       table.increments()
       table.text('description').notNullable()
       table.timestamps()
+      table.integer('wiki_id').unsigned().references('id').inTable('wiki').onDelete('CASCADE')
     })
   }
 
