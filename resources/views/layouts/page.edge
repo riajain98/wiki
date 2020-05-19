@@ -1,0 +1,23 @@
+@layout('master')
+
+@section('content')
+<div class="container">
+    <div class="get-quote">
+        <div class="row">
+            <div class="col-sm-8 col-12" style="margin-top:32px;">
+                <h3 id="quote">{{wiki.title}}</h3>
+            </div>
+            <div class="col-sm-4 col-12">
+                <a type="button" href="javascript:window.location.href=window.location.href +'/edit'"  style="margin-top:32px;padding: 0; border: none;background: none;">Edit Page</a>
+                <a type="button" href="javascript:window.location.href=window.location.href +'/history'"  style="margin-top:32px;">view history</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h5>{{description.description}}</h5>
+                <h5>This wiki Supports the Markdown formatting:<a href="/">See the Demo </a></h5>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

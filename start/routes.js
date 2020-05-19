@@ -24,4 +24,6 @@ Route.get('page/:name','PageController.showOrCreate').as('ShowOrCreateWiki')
 
 Route.get('page/:name/edit', 'PageController.edit').as('EditWiki')
 
-Route.put('page/:name/', 'PageController.update')
+Route.post('page/:name/', 'PageController.update')
+
+Route.get('page/:name/history','HistoryController.showOrCreate').as('ShowOrCreateHistory')

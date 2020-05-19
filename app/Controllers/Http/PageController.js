@@ -26,7 +26,9 @@ class PageController {
   async index ({ request, response, view }) {
     // const wiki = yield Wiki.all()
     // return Wiki.findBy('isdelete', false)
+    view.render('layouts.page')
     return Wiki.query().where('isdelete', '=', false).fetch()
+
   }
 
   /**
@@ -40,10 +42,10 @@ class PageController {
    */
   async showOrCreate ({ params, request, response, view }) {
     const wiki = await Wiki.findOrCreate({name: params.name})
-    await wiki.load('description')
-    await wiki.load('history')
+    const description = await wiki.description().last()
+    console.log(description)
 
-    return wiki
+    return view.render('layouts.page', { wiki: wiki.toJSON(), description: description.toJSON()})
   }
 
   /**
@@ -81,7 +83,7 @@ class PageController {
   async edit ({ params, request, response, view }) {
     const wiki = await Wiki.findByOrFail('name', params.name)
     await wiki.load('description')
-    return wiki
+    return view.render('layouts.edit', { wiki: wiki.toJSON() })
   }
 
   /**
@@ -92,12 +94,13 @@ class PageController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update ({ params, request, response ,view}) {
 
     const wiki = await Wiki.findBy('name', params.name)
     const wikiInfo = request.only(['name', 'change', 'description'])
 
-    wiki.name = name
+
+    wiki.title = wikiInfo.name
 
     const description = new Description
     description.description = wikiInfo.description
@@ -108,7 +111,15 @@ class PageController {
     await wiki.save()
     await wiki.description().save(description)
     await wiki.history().save(history)
+    const description1 = await wiki.description().last()
 
+    return view.render('layouts.page', { wiki: wiki.toJSON(), description: description1.toJSON()})
+    // await wiki.load('description')
+    // await wiki.load('history')
+    wiki.load()
+
+
+    return view.render('layouts.page', { wiki: wiki.toJSON() })
   }
 
   /**

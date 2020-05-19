@@ -1,0 +1,32 @@
+@layout('master')
+
+
+@section('content')
+<div class="container">
+    <h1>{{wiki.name}}: Edit History</h1>
+    <div class="row">
+        <div class="col-md-12"  style="margin-top:30px;">
+        </div>
+        <div class="col-md-12"  style="margin-top:20px;">
+            <table class="table table-hovered">
+                <thead>
+                    <tr>
+                        <td style="font-weight:bold; font-size:24px;">Change Description</td>
+                        <td style="font-weight:bold; font-size:24px;">Edited at</td>
+                        <td style="font-weight:bold; font-size:24px;">Diff</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @each(history in wiki.history)
+                    <tr>
+                    <td> {{history.description}}</td>
+                    <td>{{history.updated_at}}</td>
+                        <td><a href="/">diff </a> </td>
+                    </tr>
+                    @endeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@endsection

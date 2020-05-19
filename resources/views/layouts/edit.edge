@@ -1,0 +1,29 @@
+@layout('master')
+
+
+@section('content')
+
+<div class="container">
+    <form action="{{ route('PageController.update', { name : wiki.name},+'/' ) }}" method="post">
+        {{ csrfField() }}
+        <div class="form-group">
+            <label for="name">Title</label>
+        <input class="form-control" type="text" name="name" value="{{wiki.title}}">
+        </div>
+        <div class="form-group">
+            <label for="change">Describe the change:</label>
+            <input class="form-control" name="change" cols="30" rows="10" required>
+        </div>
+    <div class="form-group row" style="border-style: groove; height: 200px;width: 50%;">
+        <textarea class="form-control col-md-6 full-height" name="description"cols="100" id="pad">{{wiki.description['description']}}</textarea>
+        <div class="col-md-6 full-height" id="markdown"></div>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-sm btn-success">Submit</button>
+        <button type="submit" class="btn btn-sm btn-success">Cancle</button>
+    </div>
+</form>
+</div>
+@endsection
+
+

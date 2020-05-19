@@ -5,7 +5,7 @@ const Model = use('Model')
 
 class History extends Model {
   wiki(){
-    return this.belongsTo('App/Model/Wiki')
+    return this.belongsTo('App/Models/Wiki')
   }
 }
 
